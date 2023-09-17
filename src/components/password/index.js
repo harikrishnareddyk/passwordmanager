@@ -2,6 +2,8 @@ import {Component} from 'react'
 
 import './index.css'
 
+import {v4 as uuidv4} from 'uuid'
+
 import PasswordItem from '../passwordItem'
 
 class Password extends Component {
@@ -13,6 +15,7 @@ class Password extends Component {
     show: true,
     code: '..........',
     count: 0,
+    search: '',
   }
 
   site = event => {
@@ -28,21 +31,38 @@ class Password extends Component {
   }
 
   addurl = () => {
-    const {name, mail, list, password, show, code, count} = this.state
+    const {name, mail, list, password, show, code, count, search} = this.state
     const newUrl = {
       mail,
       name,
       password,
       show,
       code,
+      id: uuidv4(),
     }
 
     this.setState(prevState => ({list: [...prevState.list, newUrl]}))
     this.setState(prevState => ({count: prevState.count + 1}))
+    console.log(count)
+  }
+
+  search = event => {
+    const {name, mail, list, password, show, code, count} = this.state
+    this.setState({search: event.target.value})
+    const filtered = list.filter(item =>
+      item.mail.toLowerCase().includes(event.target.value.toLowerCase()),
+    )
+    this.setState({list: filtered})
+  }
+
+  deletepass = id => {
+    const {name, mail, list, password, show, code, count} = this.state
+    const filterEl = list.filter(item => id !== item.id)
+    this.setState({list: filterEl})
   }
 
   render() {
-    const {name, mail, list, password, show, code, count} = this.state
+    const {name, mail, list, password, show, code, search, count} = this.state
 
     return (
       <div className="logo">
@@ -95,12 +115,13 @@ class Password extends Component {
           <img
             className="image1"
             src="https://assets.ccbp.in/frontend/react-js/password-manager-sm-img.png"
+            alt="password manager"
           />
         </div>
         <div>
           <div className="historypage">
             <div className="row">
-              <p>Your Passwords .</p>
+              <h1>Your Passwords</h1>
               <p>{count}</p>
             </div>
             <div className="input">
@@ -109,23 +130,36 @@ class Password extends Component {
                 src="https://assets.ccbp.in/frontend/react-js/password-manager-search-img.png"
                 alt="search"
               />
-              <input placeholder="search" type="search" />
+              <input
+                placeholder="search"
+                type="search"
+                onChange={this.search}
+                value={search}
+              />
             </div>
           </div>
         </div>
         <hr />
         <div>
+          <input type="checkbox" id="check" />
+          <label htmlFor="check">Show passwords</label>
+        </div>
+        <div>
           {count > 0 ? (
             <ul>
               {list.map(each => (
-                <PasswordItem each={each} />
+                <PasswordItem
+                  each={each}
+                  key={each.id}
+                  deletepass={this.deletepass}
+                />
               ))}
             </ul>
           ) : (
             <div className="nopass">
               <img
                 src="https://assets.ccbp.in/frontend/react-js/no-passwords-img.png"
-                alt="nopasswords"
+                alt="no passwords"
                 className="image4"
               />
               <p>No Passwords</p>
