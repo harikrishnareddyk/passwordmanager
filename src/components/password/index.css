@@ -1,0 +1,61 @@
+.logo {
+  background-color: #9ba9eb;
+  width: 100vw;
+  padding: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.image {
+  height: 90px;
+  width: 300px;
+}
+
+.container {
+  background-color: #5763a5;
+  padding: 30px;
+  display: flex;
+}
+
+.image1 {
+  height: 400px;
+  width: 400px;
+}
+
+.input {
+  background-color: white;
+  margin: 30px;
+  width: 200px;
+  height: 40px;
+  display: flex;
+}
+
+.image3 {
+  width: 40px;
+  height: 40px;
+}
+
+.historypage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+.image4 {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.nopass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
